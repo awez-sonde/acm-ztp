@@ -49,8 +49,53 @@ discovery_image_acm-ztp.iso                100%[================================
 <img width="1556" alt="image" src="https://github.com/user-attachments/assets/b508e92a-b971-4478-a1e1-82d35cb4eca0" />
 
 
-## COntinue with the installation once the cluster shows up
+## Continue with the installation once the cluster shows up
 
 <img width="2920" alt="image" src="https://github.com/user-attachments/assets/62d499e4-6c6a-4956-9187-635b86861e28" />
+
+<img width="1652" alt="image" src="https://github.com/user-attachments/assets/c4ccc788-f854-4730-9743-0aaa00f8eeee" />
+
+## Verify the installation
+
+```
+[root@kvm acm-ztp]# oc get co
+NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE                                                  
+authentication                             4.16.42   True        False         False      42m                                                              
+baremetal                                  4.16.42   True        False         False      64m                                                              
+cloud-controller-manager                   4.16.42   True        False         False      59m                                                              
+cloud-credential                           4.16.42   True        False         False      66m                                                              
+cluster-autoscaler                         4.16.42   True        False         False      63m                                                              
+config-operator                            4.16.42   True        False         False      66m                                                              
+console                                    4.16.42   True        False         False      42m                                                              
+control-plane-machine-set                  4.16.42   True        False         False      63m                                                              
+csi-snapshot-controller                    4.16.42   True        False         False      66m                                                              
+dns                                        4.16.42   True        False         False      56m                                                              
+etcd                                       4.16.42   True        False         False      57m                                                              
+image-registry                             4.16.42   True        False         False      56m                                                              
+ingress                                    4.16.42   True        False         False      66m                                                              
+insights                                   4.16.42   True        False         False      62m                                                              
+kube-apiserver                             4.16.42   True        False         False      55m                                                              
+kube-controller-manager                    4.16.42   True        False         False      57m                                                              
+kube-scheduler                             4.16.42   True        False         False      55m                                                              
+kube-storage-version-migrator              4.16.42   True        False         False      66m                                                              
+machine-api                                4.16.42   True        False         False      62m                                                              
+machine-approver                           4.16.42   True        False         False      65m                                                              
+machine-config                             4.16.42   True        False         False      63m                                                              
+marketplace                                4.16.42   True        False         False      63m                                                              
+monitoring                                 4.16.42   True        False         False      50m                                                              
+network                                    4.16.42   True        False         False      66m                                                              
+node-tuning                                4.16.42   True        False         False      66m                                                              
+openshift-apiserver                        4.16.42   True        False         False      55m                                                              
+openshift-controller-manager               4.16.42   True        False         False      58m                                                              
+openshift-samples                          4.16.42   True        False         False      55m                                                              
+operator-lifecycle-manager                 4.16.42   True        False         False      64m                                                              
+operator-lifecycle-manager-catalog         4.16.42   True        False         False      64m                                                              
+operator-lifecycle-manager-packageserver   4.16.42   True        False         False      56m                                                              
+service-ca                                 4.16.42   True        False         False      66m                                                              
+storage                                    4.16.42   True        False         False      66m                                                              
+[root@kvm acm-ztp]#
+
+```
+
 
 
