@@ -1,0 +1,10 @@
+kind: Project
+apiVersion: project.openshift.io/v1
+metadata:
+  name: test
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+    kubernetes.io/metadata.name: test
+spec:
+  finalizers:
+    - kubernetes
