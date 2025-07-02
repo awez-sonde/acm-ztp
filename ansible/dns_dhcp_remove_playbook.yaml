@@ -1,0 +1,53 @@
+- name: Remove DHCP and DNS records
+  hosts: dns-server
+  become: yes
+  vars:
+    dhcp_config_file: /etc/dnsmasq.conf
+    dhcp_entry_mac: "00:00:00:00:00:40"
+    dhcp_entry_ip: "10.10.200.65"
+
+    dns_zone_file: /etc/bind/zones/awezlab.local.zone
+    dns_rev_file: /etc/bind/zones/10.10.200.rev
+    dns_record_name: "api.sno4-cluster4"
+    dns_record_ip: "10.10.200.65"
+    dns_ptr_ip: "65"
+    dns_ptr_fqdn: "api.sno4-cluster4.awezlab.local."
+
+  tasks:
+    - name: Remove DHCP reservation line if it exists
+      lineinfile:
+        path: "{{ dhcp_config_file }}"
+        regexp: "^dhcp-host={{ dhcp_entry_mac }},{{ dhcp_entry_ip }}"
+        state: absent
+
+    - name: Remove A record from forward zone
+      lineinfile:
+        path: "{{ dns_zone_file }}"
+        regexp: "^{{ dns_record_name }}\\s+IN\\s+A\\s+{{ dns_record_ip }}"
+        state: absent
+
+    - name: Remove wildcard A record if needed
+      lineinfile:
+        path: "{{ dns_zone_file }}"
+        regexp: "^\\*\\.apps\\.sno1-cluster1\\s+IN\\s+A\\s+{{ dns_record_ip }}"
+        state: absent
+
+    - name: Remove PTR record from reverse zone
+      lineinfile:
+        path: "{{ dns_rev_file }}"
+        regexp: "^{{ dns_ptr_ip }}\\s+IN\\s+PTR\\s+{{ dns_ptr_fqdn }}"
+        state: absent
+          
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Reload dnsmasq if DHCP entry changed
+      ansible.builtin.service:
+        name: dnsmasq
+        state: reloaded
+      when: ansible_facts.services['dnsmasq'].state == 'running'
+
+    - name: Reload named service to apply DNS changes
+      ansible.builtin.service:
+        name: named
+        state: reloaded

@@ -1,0 +1,61 @@
+---
+- name: Update dnsmasq and BIND records for new OpenShift node
+  hosts: dns-server
+  become: true
+  vars:
+    # Adding a new node
+    new_mac: "00:00:00:00:00:10"
+    new_ip: "10.10.200.50"
+    cluster_name: "sno1-cluster1"
+    dns_domain: "awezlab.local"
+    bind_zone_dir: "/etc/bind/zones"
+
+  tasks:
+    - name: Ensure dnsmasq static reservation is present
+      lineinfile:
+        path: /etc/dnsmasq.conf
+        regexp: '^dhcp-host={{ new_mac }}'
+        line: "dhcp-host={{ new_mac }},{{ new_ip }}"
+        insertafter: '^# Static DHCP reservation'
+
+    - name: Add A records to the forward zone
+      blockinfile:
+        path: "{{ bind_zone_dir }}/{{ dns_domain }}.zone"
+        marker: "; ANSIBLE MANAGED BLOCK FOR {{ cluster_name }}"
+        block: |
+          api.{{ cluster_name }}         IN A {{ new_ip }}
+          console.apps.{{ cluster_name }} IN A {{ new_ip }}
+          api-int.{{ cluster_name }}       IN A {{ new_ip }}
+          oauth.apps.{{ cluster_name }}    IN A {{ new_ip }}
+          prometheus.apps.{{ cluster_name }} IN A {{ new_ip }}
+          *.apps.{{ cluster_name }}        IN A {{ new_ip }}
+
+    - name: Add PTR record to the reverse zone
+      lineinfile:
+        path: "{{ bind_zone_dir }}/10.10.200.rev"
+        line: "{{ new_ip.split('.')[-1] }} IN PTR api.{{ cluster_name }}.{{ dns_domain }}."
+        insertafter: '^;.*PTR.*'
+        state: present
+
+    - name: Update serial number in forward zone
+      replace:
+        path: "{{ bind_zone_dir }}/{{ dns_domain }}.zone"
+        regexp: '^\s*([0-9]{10})\s*; serial'
+        replace: "{{ '%Y%m%d%H' | strftime(ansible_date_time.epoch | int) }} ; serial"
+
+    - name: Update serial number in reverse zone
+      replace:
+        path: "{{ bind_zone_dir }}/10.10.200.rev"
+        regexp: '^\s*([0-9]{10})\s*; serial'
+        replace: "{{ '%Y%m%d%H' | strftime(ansible_date_time.epoch | int) }} ; serial"
+
+    - name: Restart dnsmasq
+      service:
+        name: dnsmasq
+        state: restarted
+
+    - name: Restart named (BIND)
+      service:
+        name: bind9
+        state: restarted
+

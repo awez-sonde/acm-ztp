@@ -1,0 +1,59 @@
+apiVersion: siteconfig.open-cluster-management.io/v1alpha1
+kind: ClusterInstance
+metadata:
+  name: sno1-cluster1
+  namespace: sno1-cluster1
+spec:
+  cpuPartitioningMode: None
+  clusterName: sno1-cluster1
+  clusterImageSetNameRef: img4.17.4-x86-64-appsub
+  machineNetwork:
+    - cidr: 10.10.200.0/24
+  networkType: OVNKubernetes
+  sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDwIoFKf/lFr+filk7tbl06Nx4NAkL0O1NWUR+pi5YM0Z+Oef+JHdtGszkTC814oWSg9/8alYZp9NDRltLEfIPkpGSInu29bCPAUdEZjEL6g/F2WzzaFv3i7Vs9UpG5JI2+mO0WfZj5xZ0UakLQcI7/i1PyGEJUtRC5Bnj/OgIEoaMO0col9CmX1RPAA8SO75QwdbdGwppHaWqdunNnnjWcteqYoi13PTKI5toQwmoicMDYe+oup5hGYFWkakLV/IXvwSauXwlE6HhiECOQK+jgKaiMzGdSWdT+hkGKOdOs6bMt5OneGIPfmYACajFrl3e/H304PPQ+PJSBWKJptDdTUzfbC69NSqwmzYgV9hnz8iH11o0qTgS2ODVODD8tPU/dVe88wDPySs/vP4OJLGFAT0oaNHXx3PmLzTIREvFs4HoXbBMuhERaydEwyTk49p7KibdHZdbHYrenTOcVkNL81dEVs7Ap83u7PYE7tIfzXiJet0PpbYmEDZRAI5PN8QM= root@dell-r440-09.gsslab.brq2.redhat.com
+  nodes:
+    - automatedCleaningMode: disabled
+      nodeNetwork:
+        config:
+          dns-resolver:
+            config:
+              search:
+                - awezlab.local
+              server:
+                - 10.10.200.5
+          interfaces:
+            - ipv4:
+                dhcp: true
+                enabled: true
+              name: ens1s0
+              state: up
+              type: ethernet
+          routes:
+            config:
+              - destination: 0.0.0.0/0
+                next-hop-address: 10.10.200.1
+                next-hop-interface: ens1s0
+                table-id: 254
+        interfaces:
+          - macAddress: '00:00:00:00:00:10'
+            name: ens1s0
+      bmcCredentialsName:
+        name: ai-bmh-secret
+      ironicInspect: ''
+      hostName: sno1-cluster1
+      bootMode: UEFI
+      role: master
+      bootMACAddress: '00:00:00:00:00:10'
+      templateRefs:
+        - name: ai-node-templates-v1
+          namespace: open-cluster-management
+      cpuArchitecture: x86_64
+      bmcAddress: 'redfish-virtualmedia+http://10.10.200.1:9000/redfish/v1/Systems/local/sno1-cluster1'
+  baseDomain: awezlab.local
+  holdInstallation: false
+  templateRefs:
+    - name: ai-cluster-templates-v1
+      namespace: open-cluster-management
+  cpuArchitecture: x86_64
+  pullSecretRef:
+    name: pull-secret
