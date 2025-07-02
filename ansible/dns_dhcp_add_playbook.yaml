@@ -4,9 +4,9 @@
   become: true
   vars:
     # Adding a new node
-    new_mac: "00:00:00:00:00:10"
-    new_ip: "10.10.200.50"
-    cluster_name: "sno1-cluster1"
+    new_mac: "00:00:00:00:00:20"
+    new_ip: "10.10.200.55"
+    cluster_name: "sno2-cluster2"
     dns_domain: "awezlab.local"
     bind_zone_dir: "/etc/bind/zones"
 
