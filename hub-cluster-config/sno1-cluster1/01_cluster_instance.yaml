@@ -10,7 +10,7 @@ spec:
   machineNetwork:
     - cidr: 10.10.200.0/24
   networkType: OVNKubernetes
-  sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDwIoFKf/lFr+filk7tbl06Nx4NAkL0O1NWUR+pi5YM0Z+Oef+JHdtGszkTC814oWSg9/8alYZp9NDRltLEfIPkpGSInu29bCPAUdEZjEL6g/F2WzzaFv3i7Vs9UpG5JI2+mO0WfZj5xZ0UakLQcI7/i1PyGEJUtRC5Bnj/OgIEoaMO0col9CmX1RPAA8SO75QwdbdGwppHaWqdunNnnjWcteqYoi13PTKI5toQwmoicMDYe+oup5hGYFWkakLV/IXvwSauXwlE6HhiECOQK+jgKaiMzGdSWdT+hkGKOdOs6bMt5OneGIPfmYACajFrl3e/H304PPQ+PJSBWKJptDdTUzfbC69NSqwmzYgV9hnz8iH11o0qTgS2ODVODD8tPU/dVe88wDPySs/vP4OJLGFAT0oaNHXx3PmLzTIREvFs4HoXbBMuhERaydEwyTk49p7KibdHZdbHYrenTOcVkNL81dEVs7Ap83u7PYE7tIfzXiJet0PpbYmEDZRAI5PN8QM= root@dell-r440-09.gsslab.brq2.redhat.com
+  sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/v0/EL3Vev8pArxB8ghmFem1uLytu/ohsR3IT5jZxSvnGyX3nbgoN6nIrj+hQNYzFbTERVBW5ql/0zVOvYxhFzWPRwm5fL/iXemRRKeYuFvoxU/GBfg0+mawlGOsziHt5sZ+V9KOql5tHF/YyVQAgoCb2rP+O8A0WWLEL4P3x95O8ityLucbhoFd+3REqBWMIYtm4I85P+UKmlAh3eC2v166vYEzEPQKuMbs9I0Sl45jCIXBb9yRCuoHz/ybfwC/CE5DQRzGa0waBr+BM3rW4f8fD9HyZza0Qb6H1CK1GZdSNa8u15IiKqwvQlPEr1mkEVKG5tIus54XLFXk8ILy44mF4lQkW+t0sM9yTGsrjnBp6IYnicIWLHtAIPSYC+LlrWySsNEViwPSHd0vOJkCVsjUNfS7Sca72Yua9oEAAWYuFWWZbFAGV3JH7xY2Qb9swUiJ/zDqgb6J3um6BHmkUKL5RIzYLJLyXozjGDuylEFADn8Tka7cEkCNblt9FL1U= root@kvm.awezlab.local
   nodes:
     - automatedCleaningMode: disabled
       nodeNetwork:
@@ -48,7 +48,7 @@ spec:
         - name: ai-node-templates-v1
           namespace: open-cluster-management
       cpuArchitecture: x86_64
-      bmcAddress: 'redfish-virtualmedia+http://10.10.200.1:9000/redfish/v1/Systems/local/sno1-cluster1'
+      bmcAddress: 'redfish-virtualmedia+http://10.10.200.145:9000/redfish/v1/Systems/local/sno1-cluster1'
   baseDomain: awezlab.local
   holdInstallation: false
   templateRefs:
