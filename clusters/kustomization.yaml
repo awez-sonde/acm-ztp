@@ -3,4 +3,3 @@ kind: Kustomization
 
 resources:
   - sno1-cluster1/
-  - sno2-cluster2/
